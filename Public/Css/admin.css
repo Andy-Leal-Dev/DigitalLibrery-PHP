@@ -1,0 +1,295 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background-color: #324450;
+}
+.Container-nav-bar{
+    width: 100%;
+    height: 20vh;
+    padding: 20px 0 20px 0;
+}
+
+.div-nav-bar{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin: 0 0 0  20px;
+}
+
+.div-menu-bar{
+    display: flex;
+    align-items: center;
+}
+.div-menu{
+    width: 18vh;
+    height: 10vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    color: #ffff;
+}
+
+.div-menu a{
+    color: #ffff;
+    font-family: sans-serif;
+    outline: none;
+    text-decoration: none;
+    font-size: larger;
+}
+.Contanier-body{
+    width: 100%;
+   }
+
+.div-body{
+    margin: 40px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    color: white;
+
+    height: 100%;
+    align-content: space-between;
+    justify-content: center;
+    align-items: center;
+}
+
+.div-table{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.div-table table{
+    width: 100%;
+    border-collapse: separate; /* Use separate to allow border-spacing */
+    border-spacing: 0; /* No spacing between cells */
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    border: 2px solid #ddd; /* Border around the table */
+    border-radius: 12px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensure rounded corners are visible */
+}
+
+.div-table th, .div-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd; /* Border for each cell */
+}
+
+.div-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+.div-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.div-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.div-table-container {
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.div-search-orders,
+.div-search-user,
+.div-search-new-book{
+    display: flex;
+    justify-content: space-between;
+}
+
+.search-orders,
+.search-user,
+.search-book{
+    display: flex;
+    width: 300px;
+    height: 50px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding-left: 5px;
+}
+.search-orders input,
+.search-user input,
+.search-book input{
+    color: #ffff;
+    border: none;
+    width: 70%;
+    outline: none;
+}
+
+
+.btn-serarch{
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+
+.btn-new-book{
+    width: 150px;
+    height: 50px;
+    background-color: #55C7CF;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-new-book span{
+    background: none;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 5px;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.div-form-new-book{
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index: 10000;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+
+    width: 50%;
+    display: none;
+    padding: 30px;
+    align-content: center;
+    color: #fff;
+}
+
+.div-form{
+    background: transparent;
+    display: flex;
+    gap: 50px;
+    flex-direction: column;
+    width: 100%;
+}
+
+form{
+    background: transparent;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.div-title-form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.div-inputs{
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.div-input{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+
+}
+
+.div-separtor{
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+.div-file{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.div-input-text{
+    width: 100%;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding-left: 10px;
+}
+
+.div-input-text input{
+    width: 95%;
+    height: 35px;
+    outline: none;
+    border: none;
+    color: #ffff;
+}
+
+.div-input-text-area{
+    width: 100%;
+    height: 130px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.div-input-text-area textarea{
+    width: 98%;
+    height: 117px;
+    outline: none;
+    border: none;
+    resize: none;
+    color: #ffff;
+}
+
+.div-btn{
+    width: 200px;
+    height: 50px;
+    background-color: #55C7CF;
+    border-radius: 12px;
+}
+.div-btn button{
+    width: 200px;
+    height: 50px;
+    color: #FFFF;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: larger;
+    cursor: pointer;
+}

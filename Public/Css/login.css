@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+.Container-Nav-bar{
+    width: 100%;
+    height: 30vh;
+    background-color: #324450;
+    padding: 20px 0 20px 0;
+}
+
+.div-nav-bar{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.div-menu-bar{
+    display: flex;
+    align-items: center;
+}
+.div-menu{
+    width: 18vh;
+    height: 10vh;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    color: #ffff;
+}
+
+.div-menu a{
+    color: #ffff;
+    font-family: sans-serif;
+    outline: none;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.container-login{
+    width: 100%;
+    height: 85vh;
+    background-color: #324450;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-login{
+    width: 500px;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+.container-signup{
+    width: 100%;
+    height: 100vh;
+    background-color: #324450;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.form-signup{
+    width: 500px;
+    height: 650px;
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+
+.div-input-btn{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.div-input{
+    width: 290px;
+    height: 40px;
+    border: 2px  solid #55C7CF;
+    border-radius: 12px;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.div-name-input a{
+    margin-left: 110px;
+    color: #3DA3F0;
+    font-family: sans-serif;
+    outline: none;
+    text-decoration: none;
+   
+}
+
+.div-input input{
+    width: 30vh;
+    height: 40px;
+    outline: none;
+    background: transparent;
+    border:  none;
+}
+
+.div-name-input span{
+    font-size: larger;
+}
+
+.div-btn{
+    width: 200px;
+    height: 50px;
+    background-color: #55C7CF;
+    border-radius: 12px;
+}
+
+.div-btn-signup{
+    background-color: #2ABAD4;
+    border-radius: 12px;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-btn-signup span{
+    color: #FFFF;
+    font-size: larger;
+    cursor: pointer;
+    
+}
+.div-btn button{
+    width: 200px;
+    height: 50px;
+    color: #FFFF;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: larger;
+    cursor: pointer;
+}
+
+
+.aviso-politicas{
+    width: 40vh;
+    text-align: center;
+}
+
+.aviso-politicas span{
+   font-size: smaller;
+}
