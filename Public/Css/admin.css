@@ -133,8 +133,6 @@
     cursor: pointer;
 }
 
-
-
 .btn-new-book{
     width: 150px;
     height: 50px;
@@ -157,7 +155,7 @@
 }
 
 .pagination a {
-    color: black;
+    color: white;
     padding: 8px 16px;
     text-decoration: none;
     border: 1px solid #ddd;
@@ -166,9 +164,9 @@
 }
 
 .pagination a.active {
-    background-color: #4CAF50;
+    background-color: #55C7CF;
     color: white;
-    border: 1px solid #4CAF50;
+    border: 1px solid #55C7CF;
 }
 
 .pagination a:hover:not(.active) {
@@ -292,4 +290,22 @@ form{
     outline: none;
     font-size: larger;
     cursor: pointer;
+}
+
+.div-btn-edit{
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    height: 45px;
+    align-items: center;
+    background-color: #55C7CF;
+    
+    border-radius: 12px;
+}
+
+.div-btn-edit a{
+    background-color: transparent;
+    outline: none;
+    text-decoration: none;
+    color: #ffff;
 }

@@ -6,39 +6,96 @@
     $offset = ($page - 1) * $limit;
 
 
-    $sqlBook = "SELECT * FROM books LIMIT $limit OFFSET $offset";
-    $resultBook = $conn->query($sqlBook);
+    switch ($_GET['rute']) {
+        case 'books':
+            $sqlBook = "SELECT * FROM books LIMIT $limit OFFSET $offset";
+            $resultBook = $conn->query($sqlBook);
 
-    $total_results_sql_Book = "SELECT COUNT(*) FROM books";
-    $total_results_result_Book = $conn->query($total_results_sql_Book);
-    $total_results_row_Book = $total_results_result_Book->fetch_row();
-    $total_results_Book = $total_results_row_Book[0];
+            $total_results_sql_Book = "SELECT COUNT(*) FROM books";
+            $total_results_result_Book = $conn->query($total_results_sql_Book);
+            $total_results_row_Book = $total_results_result_Book->fetch_row();
+            $total_results_Book = $total_results_row_Book[0];
 
-    $total_pages_Book = ceil($total_results_Book / $limit);
+            $total_pages_Book = ceil($total_results_Book / $limit);
+            break;
+
+        case 'user':
+            $sqlusers = "SELECT * FROM users LIMIT $limit OFFSET $offset";
+            $resultusers = $conn->query($sqlusers);
+
+            $total_results_sql_Users = "SELECT COUNT(*) FROM users";
+            $total_results_result_Users = $conn->query($total_results_sql_Users);
+            $total_results_row_Users = $total_results_result_Users->fetch_row();
+            $total_results_Users = $total_results_row_Users[0];
+
+            $total_pages_Users = ceil($total_results_Users / $limit);
+            break;
+
+        case 'orders':
+            $sqlorders = "SELECT * FROM orders LIMIT $limit OFFSET $offset";
+            $resulorders = $conn->query($sqlorders);
+
+            $total_results_sql_Orders = "SELECT COUNT(*) FROM orders";
+            $total_results_result_Orders = $conn->query($total_results_sql_Orders);
+            $total_results_row_Orders = $total_results_result_Orders->fetch_row();
+            $total_results_Orders = $total_results_row_Orders[0];
+
+            $total_pages_Orders = ceil($total_results_Orders / $limit);
+            break;
+
+        default:
+            // Default case if no valid 'rute' is provided
+            break;
+    }
 
 
-    $sqlusers = "SELECT * FROM users LIMIT $limit OFFSET $offset";
-    $resultusers = $conn->query($sqlusers);
+    if (isset($_GET['search']) && isset($_GET['rute']) && $_GET['rute'] == 'books'){
 
-    $total_results_sql_Users = "SELECT COUNT(*) FROM users";
-    $total_results_result_Users = $conn->query($total_results_sql_Users);
-    $total_results_row_Users = $total_results_result_Users->fetch_row();
-    $total_results_Users = $total_results_row_Users[0];
+        $search = $_GET['search'];
 
-    $total_pages_Users = ceil($total_results_Users / $limit);
+        $sqlBook = "SELECT * FROM books WHERE author_book = '$search' LIMIT $limit OFFSET $offset";
+        $resultBook = $conn->query($sqlBook);
+
+        $total_results_sql_Book = "SELECT COUNT(*) FROM books WHERE author_book = '$search'";
+        $total_results_result_Book = $conn->query($total_results_sql_Book);
+        $total_results_row_Book = $total_results_result_Book->fetch_row();
+        $total_results_Book = $total_results_row_Book[0];
+
+        $total_pages_Book = ceil($total_results_Book / $limit);
 
 
-    $sqlorders = "SELECT * FROM orders LIMIT $limit OFFSET $offset";
-    $resulorders = $conn->query($sqlorders);
+    } elseif(isset($_GET['search']) && isset($_GET['rute']) && $_GET['rute'] == 'user'){
 
-    $total_results_sql_Orders = "SELECT COUNT(*) FROM orders";
-    $total_results_result_Orders = $conn->query($total_results_sql_Orders);
-    $total_results_row_Orders = $total_results_result_Orders->fetch_row();
-    $total_results_Orders = $total_results_row_Orders[0];
+        $search = $_GET['search'];
 
-    $total_pages_Orders = ceil($total_results_Orders / $limit);
-    
+        $sqlusers = "SELECT * FROM users WHERE email = '$search' LIMIT $limit OFFSET $offset";
+        $resultusers = $conn->query($sqlusers);
 
+        $total_results_sql_Users = "SELECT COUNT(*) FROM users WHERE email = '$search'";
+        $total_results_result_Users = $conn->query($total_results_sql_Users);
+        $total_results_row_Users = $total_results_result_Users->fetch_row();
+        $total_results_Users = $total_results_row_Users[0];
+
+        $total_pages_Users = ceil($total_results_Users / $limit);
+  
+
+
+    } elseif(isset($_GET['search']) && isset($_GET['rute']) && $_GET['rute'] == 'orders'){
+        
+        $search = $_GET['search'];
+
+        $sqlorders = "SELECT * FROM orders WHERE code_orders = '$search' LIMIT $limit OFFSET $offset";
+        $resulorders = $conn->query($sqlorders);
+
+        $total_results_sql_Orders = "SELECT COUNT(*) FROM orders  WHERE code_orders = '$search'";
+        $total_results_result_Orders = $conn->query($total_results_sql_Orders);
+        $total_results_row_Orders = $total_results_result_Orders->fetch_row();
+        $total_results_Orders = $total_results_row_Orders[0];
+
+        $total_pages_Orders = ceil($total_results_Orders / $limit);
+  
+
+    }
 
 ?>
 
@@ -77,16 +134,23 @@
         <div class="div-body">
             
             <div class="div-table">
-            <div class="div-title">
-                <h1>Libros</h1>
-            </div>
+                <div class="div-title">
+                    <h1>Libros</h1>
+                </div>
             <div class="div-search-new-book">
                 <div class="search-book">
-                    <input type="text" placeholder="Buscar libro">
-                    <div class="btn-serarch">
+                    <input type="text" placeholder="Buscar libro" id="input_search">
+                    <div class="btn-serarch" id="btn-search">
                     <span>Buscar</span>
+                  
                 </div>
-                </div>   
+            </div>   
+                <?php if(isset($_GET['message'])){
+                    $message = $_GET['message'];
+
+                    echo "<span>$message</span>";
+                }
+                ?>
                 <div class="btn-new-book" id="new-book">
                     <span>Nuevo Libro</span>
                 </div>
@@ -102,48 +166,52 @@
                             <th>Categoría</th>
                             <th>Descripcion</th>
                             <th>Fecha de Publicacion</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    
-                    <tbody>
-                        <?php if ($resultBook->num_rows > 0): ?>
-                            <?php while($rowBook = $resultBook->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo $rowBook['id']; ?></td>
-                                    <td><?php echo $rowBook['title_book']; ?></td>
-                                    <td><?php echo $rowBook['author_book']; ?></td>
-                                    <td><?php echo $rowBook['publisher_book']; ?></td>
-                                    <td><?php echo $rowBook['price_book']; ?></td>
-                                    <td><?php echo $rowBook['category_book']; ?></td>
-                                    <td><?php echo $rowBook['description_book']; ?></td>
-                                    <td><?php echo $rowBook['publication_date']; ?></td>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="8">No se encontraron libros</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
+                         <tbody>
+                                <?php if ($resultBook->num_rows > 0): ?>
+                                    <?php while($rowBook = $resultBook->fetch_assoc()): ?>
+                                        <tr>
+                                            <td><?php echo $rowBook['id']; ?></td>
+                                            <td><?php echo $rowBook['title_book']; ?></td>
+                                            <td><?php echo $rowBook['author_book']; ?></td>
+                                            <td><?php echo $rowBook['publisher_book']; ?></td>
+                                            <td><?php echo $rowBook['price_book']; ?></td>
+                                            <td><?php echo $rowBook['category_book']; ?></td>
+                                            <td><?php echo $rowBook['description_book']; ?></td>
+                                            <td><?php echo $rowBook['publication_date']; ?></td>
+                                            <td>
+                                                <div class="div-btn-edit">
+                                                    <a href="">Editar</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="8">No se encontraron libros</td>
+                                    </tr>
+                                <?php endif; ?>
+                        </tbody>
                 </table>
             </div>
-            <div class="pagination">
-                <?php if ($page > 1): ?>
-                    <a href="?rute=books&page=<?php echo $page - 1; ?>">&laquo; Anterior</a>
-                <?php endif; ?>
+                <div class="pagination">
+                    <?php if ($page > 1): ?>
+                        <a href="?rute=books&page=<?php echo $page - 1; ?>">&laquo; Anterior</a>
+                    <?php endif; ?>
 
-                <?php for ($i = 1; $i <= $total_pages_Book; $i++): ?>
-                    <a href="?rute=books&page=<?php echo $i; ?>" <?php if ($i == $page) echo 'class="active"'; ?>><?php echo $i; ?></a>
-                <?php endfor; ?>
+                    <?php for ($i = 1; $i <= $total_pages_Book; $i++): ?>
+                        <a href="?rute=books&page=<?php echo $i; ?>" <?php if ($i == $page) echo 'class="active"'; ?>><?php echo $i; ?></a>
+                    <?php endfor; ?>
 
-                <?php if ($page < $total_pages_Book): ?>
+                    <?php if ($page < $total_pages_Book): ?>
                     <a href="?rute=books&page=<?php echo $page + 1; ?>">Siguiente &raquo;</a>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
-
-        <div class="div-form-new-book" id="form-new-book" >
-        <form action="" method="post" enctype="multipart/form-data">
+            <div class="div-form-new-book" id="form-new-book" >
+        <form action="./Controller/new-book-controlller.php" method="post" enctype="multipart/form-data">
                 <div class="div-title-form">
                     <h2>Nuevo libro</h2>
                     <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span>
@@ -174,7 +242,7 @@
                     <div class="div-input">
                         <label for="precio">Precio</label>
                         <div class="div-input-text">
-                            <input type="text" id="precio" name="precio" required>
+                            <input type="number" id="precio" name="precio" required>
                         </div>
                     </div>
                 </div>
@@ -216,6 +284,7 @@
                 <button type="submit">Guardar</button>
             </div>
         </form>
+        </div>
     </div>
         <?php endif;?>
 
@@ -229,9 +298,9 @@
             </div>
             <div class="div-search-user">
                 <div class="search-user">
-                    <input type="text" placeholder="Buscar un Usuario">
-                    <div class="btn-serarch">
-                    <span>Buscar</span>
+                    <input type="text" placeholder="Buscar un Usuario" id="input_search_user" >
+                    <div class="btn-serarch" id="btn-search-user">
+                    <span >Buscar</span>
                 </div>
                 </div>   
             </div>
@@ -276,6 +345,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
             <div class="pagination">
                 <?php if ($page > 1): ?>
                     <a href="?rute=user&page=<?php echo $page - 1; ?>">&laquo; Anterior</a>
@@ -290,6 +360,7 @@
                 <?php endif; ?>
             </div>
         </div>
+        
         <?php endif;?>
 
         <?php if(isset($_GET['rute']) && $_GET['rute'] == 'orders'): ?>  
@@ -301,10 +372,10 @@
             </div>
             <div class="div-search-orders">
                 <div class="search-orders">
-                    <input type="text" placeholder="Buscar una compra">
-                    <div class="btn-serarch">
-                    <span>Buscar</span>
-                </div>
+                    <input type="text" placeholder="Buscar una compra" id="input_search_orders">
+                    <div class="btn-serarch" id="btn-search-order">
+                        <span >Buscar</span>
+                    </div>
                 </div>   
             </div>
                 <table>
@@ -344,6 +415,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
             <div class="pagination">
                 <?php if ($page > 1): ?>
                     <a href="?rute=orders&page=<?php echo $page - 1; ?>">&laquo; Anterior</a>
@@ -353,7 +425,7 @@
                     <a href="?rute=orders&page=<?php echo $i; ?>" <?php if ($i == $page) echo 'class="active"'; ?>><?php echo $i; ?></a>
                 <?php endfor; ?>
 
-                <?php if ($page < $total_pages_Book): ?>
+                <?php if ($page < $total_pages_Orders): ?>
                     <a href="?rute=orders&page=<?php echo $page + 1; ?>">Siguiente &raquo;</a>
                 <?php endif; ?>
             </div>
@@ -362,6 +434,45 @@
     </div>
 
 
-<script src="./Public/Javascript/admin.js"></script>
+<script >
+<?php if(isset($_GET['rute']) && $_GET['rute'] == 'books'): ?>
+
+document.getElementById('btn-search').addEventListener('click', ()=> {
+    const input = document.getElementById('input_search').value;
+    if(input){
+        window.location.href = `admin.php?rute=books&page=1&search=${input}`
+    }
+})
+
+document.getElementById('exit-btn').addEventListener('click', ()=> {
+    document.getElementById('form-new-book').style.display="none";
+})
+
+document.getElementById('new-book').addEventListener('click', ()=> {
+    document.getElementById('form-new-book').style.display="flex";
+})
+
+<?php endif;?>
+
+<?php if(isset($_GET['rute']) && $_GET['rute'] == 'user'): ?>  
+document.getElementById('btn-search-user').addEventListener('click', ()=> {
+    const input = document.getElementById('input_search_user').value;
+    if(input){
+        window.location.href = `admin.php?rute=user&page=1&search=${input}`
+    }
+})
+<?php endif;?>
+
+<?php if(isset($_GET['rute']) && $_GET['rute'] == 'orders'): ?>  
+document.getElementById('btn-search-order').addEventListener('click', ()=> {
+    const input = document.getElementById('input_search_orders').value;
+    if(input){
+        window.location.href = `admin.php?rute=orders&page=1&search=${input}`
+    }
+})
+
+<?php endif;?>
+
+</script>
 </body>
 </html>

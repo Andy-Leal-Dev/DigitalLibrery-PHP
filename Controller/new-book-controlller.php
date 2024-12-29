@@ -1,6 +1,5 @@
 <?php
-
-    include './Config/conexion.php';
+    include "../Config/conexion.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $titulo = $_POST['titulo'];
@@ -14,17 +13,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pdf = $_FILES['pdf']['name'];
 
     // Move uploaded files to a designated directory
-    move_uploaded_file($_FILES['imagen']['tmp_name'], "uploads/" . $imagen);
-    move_uploaded_file($_FILES['pdf']['tmp_name'], "uploads/" . $pdf);
+    move_uploaded_file($_FILES['imagen']['tmp_name'], "../uploads/Img/" . $imagen);
+    move_uploaded_file($_FILES['pdf']['tmp_name'], "../uploads/PDF/" . $pdf);
 
  
     $sql = "INSERT INTO books (title_book, author_book, publisher_book, price_book, category_book, description_book, publication_date, img, pdf) 
             VALUES ('$titulo', '$autor', '$editorial', '$precio', '$categoria', '$descripcion', '$fecha_publicacion', '$imagen', '$pdf')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Nuevo libro agregado exitosamente";
+        header("Location: ../admin.php?rute=books&page=1&message=Nuevo libro agregado exitosamente");
+        exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        header("Location: ../admin.php?message=Error: " . $conn->error);
+        exit();
     }
 
 }
