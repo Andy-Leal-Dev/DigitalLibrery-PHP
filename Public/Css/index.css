@@ -77,7 +77,7 @@
 }
 .new-book{
     width: 30vh;
-    height: 40vh;
+    height: 50vh;
     border: 2px solid #55C7CF;
     border-radius: 12px;
     display: flex;
@@ -87,7 +87,7 @@
     padding: 20px;
 }
 .div-img-book{
-    height: 20vh;
+    height: 30vh;
 }
 
 .div-info{

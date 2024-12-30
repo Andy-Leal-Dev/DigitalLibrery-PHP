@@ -183,7 +183,7 @@
                                             <td><?php echo $rowBook['publication_date']; ?></td>
                                             <td>
                                                 <div class="div-btn-edit">
-                                                    <a href="">Editar</a>
+                                                    <a href="./book_edit.php?id=<?php echo $rowBook['id']; ?>">Editar</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -431,6 +431,8 @@
             </div>
         </div>  
         <?php endif;?>
+
+
     </div>
 
 
