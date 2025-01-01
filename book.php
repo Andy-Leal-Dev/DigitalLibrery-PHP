@@ -58,7 +58,7 @@
             <div class="div-book">
                  <div class="book">
                     <div class="div-img-book">
-
+                    <img src="./uploads/Img/<?php echo $book['img']; ?>" alt="" style="width: 100%;height: 50vh;">
                     </div>
                     <div class="div-info">
                     <div class="info">
@@ -73,15 +73,36 @@
                         
                     </div>
                     
-                    <div class="div-btn-more">
-                        <span">Comprar</span>
-                    </div>    
+                    <?php if(isset($_COOKIE['id'])): ?>
+                        <div class="div-btn-more" id="buy-book">
+                            <span">Comprar</span>
+                        </div>  
+                    <?php else: ?>
+                        <div class="div-btn-more" id="buy-book-notid">
+                            <span">Comprar</span>
+                        </div> 
+                    <?php endif; ?>     
                     </div> 
                     
                 </div>
                      
             </div>
         </div>
+ 
+        <div class="container-login-warning" id="login-warning">
+            <div class="div-content">
+               <div class="header"> <h3>Inicia Sesion Para Disfrutar de este Libro </h3> <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span></div>
+                <span>Inicia sesion o registrate para comprar el libro.</span>
+                <div class="div-btn-login" id="btn-signup">
+                    <a href="./signin-up.php">Iniciar Sesion</a>
+                </div>
+                <div class="div-btn-signup" id="btn-signup">
+                    <a href="./signin-up.php?signup">Registrar me</a>
+                </div>
+            </div>         
+        </div>
    </div>
+
+   <script src="./Public/Javascript/book.js"></script>
 </body>
 </html>

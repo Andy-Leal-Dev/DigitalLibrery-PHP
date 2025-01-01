@@ -59,6 +59,11 @@
   
 }
 
+.div-img-book{
+    height: 50vh;
+    width: 50%
+}
+
 .book{
     width: 80vh;
     height: 60vh;
@@ -70,11 +75,7 @@
     gap: 20px;
     padding: 20px;
 }
-.div-img-book{
-    height: 20vh;
-    background: bisque;
-    width: 50%;
-}
+
 
 .div-info{
     display: flex;
@@ -112,5 +113,68 @@
     outline: none;
     text-decoration: none;
     
+}
+
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-login-warning{
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index: 10000;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+
+    width: 22%;
+    display: none;
+    padding: 30px;
+    align-content: center;
+    background-color: #FFFF;
+}
+
+.div-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.div-btn-login{
+    width: 200px;
+    height: 50px;
+    background-color: #55C7CF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFF;
+}
+
+
+.div-btn-signup{
+    background-color: #2ABAD4;
+    border-radius: 12px;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFF;
+}
+
+.div-btn-login a,
+.div-btn-signup a{
+    color: #FFFF;
+    font-size: larger;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
 }
 

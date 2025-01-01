@@ -12,8 +12,8 @@
         $sqldate = "SELECT * FROM books ORDER BY publication_date DESC LIMIT 5 ";
         $resultDate = $conn->query($sqldate);
 
-    //$sqldate = "SELECT id, title_book, category_book, price_book FROM books ORDER BY publication_date DESC LIMIT 5 ";
-    //$resultDate = $conn->query($sql);
+        $sqlbookAuthor = "SELECT * FROM books WHERE author_book = 'J.R.R. Tolkien' LIMIT 5 ";
+        $resultAuthor = $conn->query($sqlbookAuthor);
 
     }
 
@@ -104,7 +104,7 @@
                 <?php while($row = $resultCategory->fetch_assoc()): ?>
                     <div class="new-book">
                         <div class="div-img-book">
-                            <!-- Aquí puedes agregar la imagen del libro si tienes una columna para eso -->
+                            <img src="./uploads/Img/<?php echo $row['img']; ?>" alt="" style="width: 100%;height: 30vh;">
                         </div>
                         <div class="div-info">
                             <h3><?php echo htmlspecialchars($row['title_book']); ?></h3>
@@ -124,36 +124,37 @@
         <?php else: ?>  
            
             <div class="container-new-book">
-            <h2>Nuevos Libros</h2>
+
+                <h2>Nuevos Libros</h2>
                 <div class="div-new-books">
-                <?php if ($resultDate->num_rows > 0): ?>
-                <?php while($rowDate = $resultDate->fetch_assoc()): ?>
+                    <?php if ($resultDate->num_rows > 0): ?>
+                    <?php while($rowDate = $resultDate->fetch_assoc()): ?>
                     <div class="new-book">
-                        <div class="div-img-book">
-                            <!-- Aquí puedes agregar la imagen del libro si tienes una columna para eso -->
-                        </div>
-                        <div class="div-info">
-                            <h3><?php echo htmlspecialchars($rowDate['title_book']); ?></h3>
-                            <span>Categoria: <?php echo htmlspecialchars($rowDate['category_book']); ?></span>
-                            <span>Precio: $<?php echo htmlspecialchars($rowDate['price_book']); ?></span>
-                        </div>
-                        <div class="div-btn-more">
-                            <a href="./book.php?id=<?php echo $rowDate['id']; ?>">Ver más</a>
-                        </div>
+                            <div class="div-img-book">
+                                <img src="./uploads/Img/<?php echo $rowDate['img']; ?>" alt="" style="width: 100%;height: 30vh;">
+                            </div>
+                            <div class="div-info">
+                                <h3><?php echo htmlspecialchars($rowDate['title_book']); ?></h3>
+                                <span>Categoria: <?php echo htmlspecialchars($rowDate['category_book']); ?></span>
+                                <span>Precio: $<?php echo htmlspecialchars($rowDate['price_book']); ?></span>
+                            </div>
+                            <div class="div-btn-more">
+                                <a href="./book.php?id=<?php echo $rowDate['id']; ?>">Ver más</a>
+                            </div>
                     </div>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <p>No se encontraron libros en esta categoría.</p>
-            <?php endif; ?>   
-                     
-                </div>
-          </div>
+                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <p>No se encontraron libros en esta categoría.</p>
+                    <?php endif; ?>   
+                </div>     
+            
+            </div>
           <div class="container-popular-book">
             <h2>Libros Populares</h2>
                 <div class="div-new-books">
                      <div class="new-book">
                            <div class="div-img-book">
-
+                           <img src="./uploads/Img/<?php echo $row['img']; ?>" alt="" style="width: 100%;height: 30vh;">
                            </div>
                            <div class="div-info">
                                <h3>Nombre del libro</h3>
@@ -168,22 +169,28 @@
                 </div>
           </div>
           <div class="container-sage-book">
-            <h2>Saga en más leida</h2>
+            <h2>Saga del J.R.R. Tolkien</h2>
                 <div class="div-new-books">
-                     <div class="new-book">
-                           <div class="div-img-book">
-
-                           </div>
-                           <div class="div-info">
-                               <h3>Nombre del libro</h3>
-                               <span>Categoria</span>
-                               <span>Precio: 2$</span>     
-                           </div> 
-                           <div class="div-btn-more">
-                           <a href="">Ver mas</a>
-                           </div>
-                     </div>
-                </div>
+                    <?php if ($resultAuthor->num_rows > 0): ?>
+                    <?php while($rowAuthor = $resultAuthor->fetch_assoc()): ?>
+                    <div class="new-book">
+                            <div class="div-img-book">
+                                <img src="./uploads/Img/<?php echo $rowAuthor['img']; ?>" alt="" style="width: 100%;height: 30vh;">
+                            </div>
+                            <div class="div-info">
+                                <h3><?php echo htmlspecialchars($rowAuthor['title_book']); ?></h3>
+                                <span>Categoria: <?php echo htmlspecialchars($rowAuthor['category_book']); ?></span>
+                                <span>Precio: $<?php echo htmlspecialchars($rowAuthor['price_book']); ?></span>
+                            </div>
+                            <div class="div-btn-more">
+                                <a href="./book.php?id=<?php echo $rowAuthor['id']; ?>">Ver más</a>
+                            </div>
+                    </div>
+                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <p>No se encontraron libros en esta categoría.</p>
+                    <?php endif; ?>   
+                </div>  
           </div>
         
         

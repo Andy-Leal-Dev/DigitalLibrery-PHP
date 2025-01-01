@@ -1,10 +1,4 @@
 
-document.getElementById('btn-signup').addEventListener('click',()=>{
-
-    document.getElementById('signup').style.display="flex";
-    document.getElementById('login').style.display="none";
-});
-
 const form = document.getElementById('loginForm');
 const submitBtn = document.getElementById('submitBtn');
 const errorMessage = document.getElementById('error-message');
