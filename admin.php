@@ -1,4 +1,11 @@
 <?php
+if (!isset($_COOKIE['id'])) {
+    header("Location: ./index.php");
+    exit();
+}
+?>
+
+<?php
     include './Config/conexion.php';
 
     $limit = 10; // Número de resultados por página

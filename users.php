@@ -1,3 +1,25 @@
+<?php
+if (!isset($_COOKIE['id'])) {
+    header("Location: ./index.php");
+    exit();
+}
+?>
+
+<?php
+          if(isset($_COOKIE['id'])){
+            include './Config/conexion.php';
+            $sql = "SELECT name, lastname FROM users WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s",$_COOKIE['id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $usuario = $result->fetch_assoc();
+            $nombre = $usuario['name'];
+            $apellido = $usuario['lastname'];
+
+          } 
+          
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,22 +66,8 @@
    </header>
    <div class="Contanier-body">
           <div class="container-new-book">
-          <?php
-          if(isset($_COOKIE['id'])){
-            include './Config/conexion.php';
-            $sql = "SELECT name, lastname FROM users WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s",$_COOKIE['id']);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $usuario = $result->fetch_assoc();
-            $nombre = $usuario['name'];
-            $apellido = $usuario['lastname'];
-            echo "<h2>¡Hola Bienvenido, $nombre $apellido ! </h2>";
-
-          } 
-          
-          ?>
+        
+          <h2><?php echo "¡Hola Bienvenido, $nombre $apellido ! " ?></h2>
             
                 <div class="div-new-books">
                      <div class="new-book">

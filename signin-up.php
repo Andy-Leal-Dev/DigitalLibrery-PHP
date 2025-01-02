@@ -85,6 +85,7 @@
             </div>
         </form>
     </div>
+
 <?php else: ?>
     <div class="container-login" id="login">
         <form action="./Controller/login-controller.php" method="post" class="form-login" id="loginForm">
@@ -115,8 +116,9 @@
             </div>
         </form>
     </div>
-<?php endif; ?>
+    <script src="./Public/Javascript/signin-up.js"></script>
+    <?php endif; ?>
 
-<script src="./Public/Javascript/signin-up.js"></script>
+
 </body>
 </html>

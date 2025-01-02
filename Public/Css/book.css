@@ -121,6 +121,22 @@
     justify-content: space-between;
     align-items: center;
 }
+.container-form-buy{
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index: 10000;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    width: 30%;
+    display: none;
+    padding: 30px;
+    align-content: center;
+    background-color: #FFFF;
+    
+}
+
 .container-login-warning{
     position: fixed;
     bottom: 50%;

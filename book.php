@@ -7,6 +7,15 @@
     $stmt->execute();
     $result = $stmt->get_result();
     $book = $result->fetch_assoc();
+
+    include './Config/conexion.php';
+    $sql = "SELECT name FROM users WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s",$_COOKIE['id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $usuario = $result->fetch_assoc();
+    $nombre = $usuario['name'];
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +27,7 @@
     <link rel="stylesheet" href="./Public/Css/book.css">
 </head>
 <body>
-<header class="Container-Nav-bar">
+    <header class="Container-Nav-bar">
     <div class="div-nav-bar">
         <div class="div-logo">
             <img src="./Public/Img/milogo.png" alt="" srcset="" style="height: 22vh;">
@@ -47,9 +56,18 @@
             <div class="div-menu">
                 <a href="./index.php?category=Novelas">Novelas</a>
             </div>
-            <div class="div-menu">
-            <a href="./Controller/logout-controller.php"><img src="./Public/Img/loguot.png" style="width: 4vh;" alt="" srcset=""></a>
-            </div>
+            <?php if(isset($_COOKIE['id'])): ?>
+                <div class='div-menu'>
+                    <a href='./users.php'><?php echo "¡Hola, $nombre!" ?> </a>
+                </div>
+                <div class="div-menu">
+                    <a href="./Controller/logout-controller.php"><img src="./Public/Img/loguot.png" style="width: 4vh;" alt="" srcset=""></a>
+                </div>
+            <?php else: ?>
+                <div class="div-menu">
+                    <a href="./signin-up.php">Iniciar Sesion</a>
+                </div>
+            <?php endif; ?>   
         </div>
     </div>
    </header>
@@ -58,7 +76,7 @@
             <div class="div-book">
                  <div class="book">
                     <div class="div-img-book">
-                    <img src="./uploads/Img/<?php echo $book['img']; ?>" alt="" style="width: 100%;height: 50vh;">
+                        <img src="./uploads/Img/<?php echo $book['img']; ?>" alt="" style="width: 100%;height: 50vh;">
                     </div>
                     <div class="div-info">
                     <div class="info">
@@ -77,32 +95,76 @@
                         <div class="div-btn-more" id="buy-book">
                             <span">Comprar</span>
                         </div>  
+
+                        <div class="container-form-buy" id="form-buy">
+                            <div class="div-content">
+                                <div class="header"> 
+                                    <h3>Comprar Libro</h3> 
+                                    <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span>
+                                </div>
+                                <form action="./Controller/buy-controller.php" method="post">
+                                  
+                            
+                                </form>
+                            </div>
+
+                        </div>
                     <?php else: ?>
                         <div class="div-btn-more" id="buy-book-notid">
                             <span">Comprar</span>
                         </div> 
-                    <?php endif; ?>     
-                    </div> 
-                    
-                </div>
-                     
-            </div>
-        </div>
- 
-        <div class="container-login-warning" id="login-warning">
-            <div class="div-content">
-               <div class="header"> <h3>Inicia Sesion Para Disfrutar de este Libro </h3> <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span></div>
-                <span>Inicia sesion o registrate para comprar el libro.</span>
-                <div class="div-btn-login" id="btn-signup">
-                    <a href="./signin-up.php">Iniciar Sesion</a>
-                </div>
-                <div class="div-btn-signup" id="btn-signup">
-                    <a href="./signin-up.php?signup">Registrar me</a>
-                </div>
-            </div>         
-        </div>
-   </div>
 
-   <script src="./Public/Javascript/book.js"></script>
+                        <div class="container-login-warning" id="login-warning">
+                            <div class="div-content">
+                                <div class="header"> 
+                                    <h3>Inicia Sesion Para Disfrutar de este Libro </h3> 
+                                    <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span>
+                                </div>
+                                <span>Inicia sesion o registrate para comprar el libro.</span>
+                                <div class="div-btn-login" id="btn-signup">
+                                    <a href="./signin-up.php">Iniciar Sesion</a>
+                                </div>
+                                <div class="div-btn-signup" id="btn-signup">
+                                    <a href="./signin-up.php?signup">Registrar me</a>
+                                </div>
+                            </div>         
+                        </div>
+                    </div>
+                    <?php endif; ?>   
+                    
+             
+                </div> 
+                    
+            </div>
+                     
+        </div>
+    </div>
+ 
+        
+
+   <script >
+        <?php if(isset($_COOKIE['id'])): ?>
+                       
+            document.getElementById('buy-book').addEventListener('click',()=>{
+                document.getElementById('form-buy').style.display="flex";
+            });
+
+
+            document.getElementById('exit-btn').addEventListener('click',()=>{
+            document.getElementById('form-buy').style.display="none";
+            });
+        <?php else: ?>
+            document.getElementById('buy-book-notid').addEventListener('click',()=>{
+                document.getElementById('login-warning').style.display="flex";
+            });
+
+
+            document.getElementById('exit-btn').addEventListener('click',()=>{
+            document.getElementById('login-warning').style.display="none";
+            });     
+        <?php endif; ?>     
+
+
+   </script>
 </body>
 </html>
