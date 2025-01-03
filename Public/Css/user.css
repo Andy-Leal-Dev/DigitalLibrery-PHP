@@ -52,6 +52,34 @@
 }
 
 
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.Continer-Read-Book{
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index: 10000;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    width: 50%;
+    height: 80%;
+    display: flex;
+    padding: 30px;
+    align-content: center;
+    background-color: #FFFF;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+.body{
+    height: 90%;
+}
 .div-new-books{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(35vh, 1fr));
@@ -63,7 +91,7 @@
 }
 .new-book{
     width: 30vh;
-    height: 35vh;
+    height: 50vh;
     border: 2px solid #55C7CF;
     border-radius: 12px;
     display: flex;
@@ -73,7 +101,8 @@
     padding: 20px;
 }
 .div-img-book{
-    height: 20vh;
+    height: 30vh;
+    width: 100%
 }
 
 .div-info{
@@ -84,12 +113,22 @@
     width: 100%;
 }
 
-.div-btn-more button{
+.div-btn-more{
     width: 200px;
-    height: 40px;
+    height: 50px;
     border: none;
     border-radius: 20px;
     background-color: #55C7CF;
     color: white;
-    font-size: medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-btn-more a{
+    color: #FFFF;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    
 }

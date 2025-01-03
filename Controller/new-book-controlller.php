@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ../admin.php?rute=books&page=1&message=Nuevo libro agregado exitosamente");
         exit();
     } else {
-        header("Location: ../admin.php?message=Error: " . $conn->error);
+        header("Location: ../admin.php?rute=books&page=1&message=Error: " . $conn->error);
         exit();
     }
 

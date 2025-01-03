@@ -100,11 +100,65 @@
                             <div class="div-content">
                                 <div class="header"> 
                                     <h3>Comprar Libro</h3> 
-                                    <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span>
+                                    <span id="exit-btn" style="font-size: large;cursor: pointer;">X</span>
                                 </div>
-                                <form action="./Controller/buy-controller.php" method="post">
-                                  
-                            
+                                <form action="./Controller/buy-controller.php?id=<?php echo $book['id']?>" method="post">
+                                    <div class="div-separtor">
+                                        <div class="div-input">
+                                            <label for="titulo">Nombre</label>
+                                            <div class="div-input-text">
+                                                <input type="text" id="name" name="name" required>
+                                            </div>
+                                        </div>
+                                        <div class="div-input">
+                                            <label for="autor">Apellido</label>
+                                            <div class="div-input-text">
+                                                <input type="text" id="lastname" name="lastname" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="div-input">
+                                        <label for="autor">Direccion</label>
+                                        <div class="div-input-text">
+                                            <input type="text" id="direction" name="direction" required>
+                                        </div>
+                                    </div>
+                                    <div class="div-input">
+                                        <label for="autor">Numero de Tarjeta</label>
+                                        <div class="div-input-text">
+                                            <input type="text" id="num_wallet" name="num_wallet" required>
+                                        </div>
+                                    </div>
+                                    <div class="div-separtor">
+                                        <div class="div-input">
+                                            <label for="titulo">Fecha </label>
+                                            <div class="div-input-date">
+                                                <input type="tel" id="date_wallet" name="MM_wallet" placeholder="MM" required>
+                                                <span>/</span>
+                                                <input type="tel" id="date_wallet" name="AA_wallet" placeholder="AA" required>
+                                            </div>
+                                        </div>
+                                        <div class="div-input">
+                                            <label for="autor">CVC</label>
+                                            <div class="div-input-text">
+                                                <input type="text" id="cvc_wallet" name="cvc_wallet" required>
+                                            </div>
+                                        </div>
+                                        <div class="div-input">
+                                            <label for="tipo">Tipo</label>
+                                            <div class="div-input-text">
+                                                <select id="type_wallet" class="selector-type" name="type_wallet" required>
+                                                    <option value="Visa">Visa</option>
+                                                    <option value="MasterCard">MasterCard</option>
+                                                    <option value="America Express">America Express</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="div-btn-buy">
+                                            <button class="btn-buy">Comprar</button>
+                                        </div>
                                 </form>
                             </div>
 
@@ -140,9 +194,48 @@
         </div>
     </div>
  
-        
+    <?php if(isset($_GET['messageBuy']) && $_GET['messageBuy'] == 'true'):?>
+        <div class="container-popup-aprovado" id="aprovate">
+            <div class="div-content-popup">
+                <div class="header-popup"> 
+                <span id="exit-btn-popup" style="font-size: x-large;cursor: pointer;">X</span>
+                </div>
+                <img src="./Public/Img/check.png" alt="" srcset="" style="height: 15vh;">
+                <h3>Tu Compra se Realizo con Exito</h3> 
+                <span>Ya esta disponible en tu perfil para que lo disfrutes.</span>
+                <div class="div-btn-login" id="btn-signup">
+                    <a href="./users.php">Ver mi Perfil</a>
+                </div>   
+            </div>         
+        </div>
+    <?php endif; ?> 
+    <?php if(isset($_GET['messageBuy']) && $_GET['messageBuy'] == 'false'):?>
+        <div class="container-popup-aprovado" id="decline">
+            <div class="div-content-popup">
+                <div class="header-popup"> 
+                <span id="exit-btn-popup" style="font-size: x-large;cursor: pointer;">X</span>
+                </div>
+                <img src="./Public/Img/cancel.png" alt="" srcset="" style="height: 10vh;">
+                <h3>Tu Compra no se pudo realizar</h3> 
+                <span>Hubo problemas en la transaccion Intenta mas tarde.</span>
+                   
+            </div>         
+        </div>
+    <?php endif; ?>   
 
    <script >
+
+    <?php if(isset($_GET['messageBuy']) && $_GET['messageBuy'] == 'true'):?>
+        document.getElementById('exit-btn-popup').addEventListener('click',()=>{
+            document.getElementById('aprovate').style.display="none";
+            });
+    <?php endif; ?> 
+    <?php if(isset($_GET['messageBuy']) && $_GET['messageBuy'] == 'false'):?>
+        document.getElementById('exit-btn-popup').addEventListener('click',()=>{
+            document.getElementById('decline').style.display="none";
+            });
+    <?php endif; ?>  
+
         <?php if(isset($_COOKIE['id'])): ?>
                        
             document.getElementById('buy-book').addEventListener('click',()=>{

@@ -6,19 +6,27 @@ if (!isset($_COOKIE['id'])) {
 ?>
 
 <?php
+ include './Config/conexion.php';
           if(isset($_COOKIE['id'])){
-            include './Config/conexion.php';
             $sql = "SELECT name, lastname FROM users WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("s",$_COOKIE['id']);
             $stmt->execute();
-            $result = $stmt->get_result();
-            $usuario = $result->fetch_assoc();
+            $resultU = $stmt->get_result();
+            $usuario = $resultU->fetch_assoc();
             $nombre = $usuario['name'];
             $apellido = $usuario['lastname'];
 
+            $iduser = $_COOKIE['id'];
+            $sql = "SELECT books.id, books.img, books.title_book, books.author_book, books.category_book  FROM books JOIN orders ON orders.id_book = books.id JOIN users ON users.id = orders.id_user WHERE users.id = '$iduser'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $resultBook = $stmt->get_result();
+
+           
           } 
           
+        
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,26 +73,67 @@ if (!isset($_COOKIE['id'])) {
     </div>
    </header>
    <div class="Contanier-body">
-          <div class="container-new-book">
+        <div class="container-new-book">
         
           <h2><?php echo "¡Hola Bienvenido, $nombre $apellido ! " ?></h2>
             
                 <div class="div-new-books">
-                     <div class="new-book">
-                           <div class="div-img-book">
+                <?php if ($resultBook->num_rows > 0): ?>
+                    <?php while($rowBook = $resultBook->fetch_assoc()): ?>
+                    <div class="new-book">
+                            <div class="div-img-book">
+                                <img src="./uploads/Img/<?php echo $rowBook['img']; ?>" alt="" style="width: 100%;height: 30vh;">
+                            </div>
+                            <div class="div-info">
+                                <h3><?php echo htmlspecialchars($rowBook['title_book']); ?></h3>
+                                <span>Categoria: <?php echo htmlspecialchars($rowBook['category_book']); ?></span>
+                            </div>
+                            <div class="div-btn-more">
+                                <a href="./users.php?ReedBook=true&id=<?php echo $rowBook['id']; ?>">Leer</a>
+                            </div>
+                    </div>
+                    <?php endwhile; ?>
+                    <?php else: ?>
+                        <p>No se encontraron libros</p>
+                    <?php endif; ?> 
+     
+                </div>
+        </div>
+        <?php if(isset($_GET['ReedBook']) && $_GET['ReedBook'] == 'true'):?>
+            <?php 
+            $idUser = $_COOKIE['id'];
+            $idBook = $_GET['id'];
+            $sqlBookFind = "SELECT COUNT(*) as count FROM books JOIN orders ON orders.id_book = books.id JOIN users ON users.id = orders.id_user WHERE books.id = ? AND users.id = ?;";
+            $stmt = $conn->prepare($sqlBookFind);
+            $stmt->bind_param("ii", $idBook, $idUser);
+            $stmt->execute();
+            $resultReed = $stmt->get_result();
+            $rowReed = $resultReed->fetch_assoc();
+            ?>
 
-                           </div>
-                           <div class="div-info">
-                               <h3>Nombre del libro</h3>
-                               <span>Categoria</span>
-                                   
-                           </div> 
-                           <div class="div-btn-more">
-                                <button>Leer</button>
-                           </div>
-                     </div>
-                     
-          </div>
+            <?php if($rowReed['count'] >= 1):?>
+                <div class="Continer-Read-Book" id="reed-book">
+                    <div class="header">
+                        <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span>
+                    </div>
+
+                    <div class="body">
+                        <embed  src="uploads/PDF/PYTHON.pdf" type="application/pdf" style="width: 100%;height: 100%;" ></embed>
+                    </div>
+                </div>
+                <script>
+                    document.getElementById('exit-btn').addEventListener('click',()=>{
+                        document.getElementById('reed-book').style.display="none";
+                 });
+                </script>
+            <?php else: ?>
+                <?php
+                    header("Location: ./users.php");
+                    exit();
+                ?>
+            <?php endif; ?>
+            
+        <?php endif; ?>   
    </div>
 </body>
 </html>
