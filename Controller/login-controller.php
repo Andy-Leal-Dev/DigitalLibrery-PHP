@@ -14,20 +14,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($usuario && password_verify($contrasena, $usuario['pass'])) {
         $cookieid = $usuario['id'];
-        setcookie('id', $cookieid, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true); // Secure and HttpOnly flags
-       
-        // Respuesta JSON para éxito
+        $cookietype = $usuario['type'];
+        setcookie('id', $cookieid, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
+        setcookie('type', $cookietype, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
+
         $response = array('success' => true, 'type' => $usuario['type']);
         echo json_encode($response);
         exit();
     } else {
-        // Respuesta JSON para error
+
         $response = array('success' => false, 'message' => "Correo o contraseña incorrectos");
         echo json_encode($response);
         exit();
     }
 } else {
-    // Manejar solicitudes que no son POST (opcional, pero recomendado)
+
     $response = array('success' => false, 'message' => "Solicitud no válida.");
     echo json_encode($response);
     exit();

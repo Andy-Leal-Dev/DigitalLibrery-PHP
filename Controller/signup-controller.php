@@ -20,7 +20,9 @@
             $id_user = $conn->insert_id; 
             if ($id_user) { 
                 $cookieid = $id_user;
-                setcookie('id', $cookieid);
+                $cookietype = $tipo;
+                setcookie('id', $cookieid, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
+                setcookie('type', $cookietype, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
                 $referred = isset($_COOKIE['id']);
                 if(!$referred){
                     echo "no hay cokie";

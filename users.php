@@ -1,9 +1,17 @@
 <?php
+if (isset($_COOKIE['type']) && $_COOKIE['type'] == 0) {
+    header("Location: ./admin.php?rute=books");
+    exit();
+}
+?>
+
+<?php
 if (!isset($_COOKIE['id'])) {
     header("Location: ./index.php");
     exit();
 }
 ?>
+
 
 <?php
  include './Config/conexion.php';
