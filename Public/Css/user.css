@@ -59,6 +59,23 @@
     align-items: center;
 }
 
+@media (max-width: 1366px) {
+   
+    .div-info {
+        font-size: small;
+    }
+    .div-menu-bar {
+        font-size: small;
+    }
+    .div-menu {
+        width: 14vh;
+        height: 10vh;
+    }
+    .new-book {
+        height: 60vh;
+    }
+}
+
 .Continer-Read-Book{
     position: fixed;
     bottom: 50%;
