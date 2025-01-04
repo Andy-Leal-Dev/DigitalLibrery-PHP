@@ -1,4 +1,12 @@
 <?php
+if (!isset($_COOKIE['id'])) {
+    header("Location: ./index.php");
+    exit();
+}
+?>
+
+
+<?php
     include './Config/conexion.php';
     
     $idbook = $_GET['id'];
@@ -44,7 +52,7 @@
             <div class="div-book">
                  <div class="book">
                     <div class="div-img-book">
-
+                    <img src="./uploads/Img/<?php echo $book['img']; ?>" alt="" style="width: 100%;height: 60vh;">
                     </div>
                     <form class="div-info"  id="form-edit" data-id="<?php echo $idbook; ?>">
                         <input type="hidden" value="<?php echo $idbook; ?>" name="id">

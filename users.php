@@ -112,13 +112,21 @@ if (!isset($_COOKIE['id'])) {
             ?>
 
             <?php if($rowReed['count'] >= 1):?>
-                <div class="Continer-Read-Book" id="reed-book">
+                <?php
+                    $sql = "SELECT pdf FROM books WHERE id = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("i", $idBook);
+                    $stmt->execute();
+                    $resultPDF = $stmt->get_result();
+                    $rowPDF = $resultPDF->fetch_assoc();
+                    ?>                
+            <div class="Continer-Read-Book" id="reed-book">
                     <div class="header">
                         <span id="exit-btn" style="font-size: x-large;cursor: pointer;">X</span>
                     </div>
 
                     <div class="body">
-                        <embed  src="uploads/PDF/PYTHON.pdf" type="application/pdf" style="width: 100%;height: 100%;" ></embed>
+                        <embed  src="uploads/PDF/<?php echo $rowPDF?>" type="application/pdf" style="width: 100%;height: 100%;" ></embed>
                     </div>
                 </div>
                 <script>

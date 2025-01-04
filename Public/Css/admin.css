@@ -309,3 +309,28 @@ form{
     text-decoration: none;
     color: #ffff;
 }
+
+.container-more-info{
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index: 10000;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    align-content: center;
+    color: #fff;
+    gap: 20px;
+}
+
+.info-user,
+.info-pay,
+.info-book{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

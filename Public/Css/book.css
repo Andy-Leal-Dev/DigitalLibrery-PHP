@@ -144,7 +144,7 @@
     z-index: 10000;
     border: 2px solid #ddd;
     border-radius: 12px;
-    width: 30%;
+    width: 40%;
     display:flex;
     padding: 30px;
     align-content: center;
@@ -321,4 +321,49 @@ form{
     border: none;
     outline: none;
     background-color: transparent;
+}
+
+@media (max-width: 1366px) {
+    .new-book {
+        width: 30vh;
+        height: 55vh;
+        border: 2px solid #55C7CF;
+        border-radius: 12px;
+        display: flex
+    ;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .div-btn-more {
+        width: 225px;
+        height: 50px;
+        border: none;
+        border-radius: 20px;
+        background-color: #55C7CF;
+        color: white;
+        display: flex
+    ;
+        align-items: center;
+        justify-content: center;
+    }
+    .div-menu-bar {
+        display: flex
+    ;
+        align-items: center;
+        font-size: small;
+    }
+
+    .div-menu {
+        width: 14vh;
+        height: 10vh;
+        display: flex
+    ;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+        color: #ffff;
+    }
 }

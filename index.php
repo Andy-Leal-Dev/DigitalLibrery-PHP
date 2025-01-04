@@ -9,10 +9,10 @@
 
     } else{
 
-        $sqldate = "SELECT * FROM books ORDER BY publication_date DESC LIMIT 5 ";
+        $sqldate = "SELECT * FROM books ORDER BY publication_date DESC LIMIT 10 ";
         $resultDate = $conn->query($sqldate);
 
-        $sqlbookAuthor = "SELECT * FROM books WHERE author_book = 'J.R.R. Tolkien' LIMIT 5 ";
+        $sqlbookAuthor = "SELECT * FROM books WHERE author_book = 'J.R.R. Tolkien' LIMIT 8 ";
         $resultAuthor = $conn->query($sqlbookAuthor);
 
     }
@@ -123,32 +123,39 @@
         </div>
         <?php else: ?>  
            
-            <div class="container-new-book">
-
+            <div class="container-new-book slider-container">
                 <h2>Nuevos Libros</h2>
-                <div class="div-new-books">
-                    <?php if ($resultDate->num_rows > 0): ?>
-                    <?php while($rowDate = $resultDate->fetch_assoc()): ?>
-                    <div class="new-book">
-                            <div class="div-img-book">
-                                <img src="./uploads/Img/<?php echo $rowDate['img']; ?>" alt="" style="width: 100%;height: 30vh;">
-                            </div>
-                            <div class="div-info">
-                                <h3><?php echo htmlspecialchars($rowDate['title_book']); ?></h3>
-                                <span>Categoria: <?php echo htmlspecialchars($rowDate['category_book']); ?></span>
-                                <span>Precio: $<?php echo htmlspecialchars($rowDate['price_book']); ?></span>
-                            </div>
-                            <div class="div-btn-more">
-                                <a href="./book.php?id=<?php echo $rowDate['id']; ?>">Ver más</a>
-                            </div>
+                <div class="slider-wrapper">
+                    <button class="slider-button prev" onclick="showPrevSlide()">&#10094;</button>
+                    <div class="div-new-books slider">
+                        <?php if ($resultDate->num_rows > 0): ?>
+                        <?php while($rowDate = $resultDate->fetch_assoc()): ?>
+                        <div class="new-book slide">
+                                <div class="div-img-book">
+                                    <img src="./uploads/Img/<?php echo $rowDate['img']; ?>" alt="" style="width: 100%;height: 30vh;">
+                                </div>
+                                <div class="div-info">
+                                    <h3><?php echo htmlspecialchars($rowDate['title_book']); ?></h3>
+                                    <span>Categoria: <?php echo htmlspecialchars($rowDate['category_book']); ?></span>
+                                    <span>Precio: $<?php echo htmlspecialchars($rowDate['price_book']); ?></span>
+                                </div>
+                                <div class="div-btn-more">
+                                    <a href="./book.php?id=<?php echo $rowDate['id']; ?>">Ver más</a>
+                                </div>
+                        </div>
+                        <?php endwhile; ?>
+                        <?php else: ?>
+                            <p>No se encontraron libros en esta categoría.</p>
+                        <?php endif; ?>   
                     </div>
-                    <?php endwhile; ?>
-                    <?php else: ?>
-                        <p>No se encontraron libros en esta categoría.</p>
-                    <?php endif; ?>   
-                </div>     
-            
+                    <button class="slider-button next" onclick="showNextSlide()">&#10095;</button>
+                </div>
             </div>
+
+        
+
+    
+        </div>
           <div class="container-popular-book">
             <h2>Libros Populares</h2>
                 <div class="div-new-books">
@@ -168,12 +175,14 @@
                   
                 </div>
           </div>
-          <div class="container-sage-book">
+          <div class="container-sage-book slider-container">
             <h2>Saga del J.R.R. Tolkien</h2>
-                <div class="div-new-books">
+            <div  class="slider-wrapper">
+                <button class="slider-button prev" onclick="showPrevSlide()">&#10094;</button>
+                <div class="div-new-books slider">
                     <?php if ($resultAuthor->num_rows > 0): ?>
                     <?php while($rowAuthor = $resultAuthor->fetch_assoc()): ?>
-                    <div class="new-book">
+                    <div class="new-book slide">
                             <div class="div-img-book">
                                 <img src="./uploads/Img/<?php echo $rowAuthor['img']; ?>" alt="" style="width: 100%;height: 30vh;">
                             </div>
@@ -191,7 +200,9 @@
                         <p>No se encontraron libros en esta categoría.</p>
                     <?php endif; ?>   
                 </div>  
-          </div>
+                <button class="slider-button next" onclick="showNextSlide()">&#10095;</button>
+            </div>
+        </div>
         
         
         <?php endif;?>
@@ -199,9 +210,31 @@
 
         
     </div>
+
+   
     <footer class="foote-info">
             <span>© 2024 Digital Library. Todos los derechos reservados.</span>
             <span>¿Quieres que tu libro se publique aqui? <a href="">Contactate con nosotros</a></span>
     </footer>
+
+    <script>
+            let currentIndex = 0;
+
+            function showNextSlide() {
+                const slider = document.querySelector('.slider');
+                const slides = document.querySelectorAll('.slide');
+                currentIndex = (currentIndex + 1) % slides.length;
+                slider.style.transform = `translateX(-${currentIndex * 100 / slides.length}%)`;
+            }
+
+            function showPrevSlide() {
+                const slider = document.querySelector('.slider');
+                const slides = document.querySelectorAll('.slide');
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                slider.style.transform = `translateX(-${currentIndex * 100 / slides.length}%)`;
+            }
+
+            setInterval(showNextSlide, 3000);
+            </script>
 </body>
 </html>

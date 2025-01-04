@@ -39,7 +39,9 @@ if (!isset($_COOKIE['id'])) {
             break;
 
         case 'orders':
-            $sqlorders = "SELECT * FROM orders LIMIT $limit OFFSET $offset";
+            $sqlorders = "SELECT orders.id, orders.code_orders,orders.order_date, books.title_book, info_pay.type_wallet, orders.status FROM `orders`
+            JOIN books ON books.id = orders.id_book 
+            JOIN info_pay ON info_pay.id = orders.id_info_pay LIMIT $limit OFFSET $offset";
             $resulorders = $conn->query($sqlorders);
 
             $total_results_sql_Orders = "SELECT COUNT(*) FROM orders";
@@ -403,13 +405,14 @@ if (!isset($_COOKIE['id'])) {
                                 <tr>
                                     <td><?php echo $rowOrders['id']; ?></td>
                                     <td><?php echo $rowOrders['code_orders']; ?></td>
-                                    <td><?php echo $rowOrders['id_book']; ?></td>
+                                    <td><?php echo $rowOrders['title_book']; ?></td>
                                     <td><?php echo $rowOrders['order_date']; ?></td>
-                                    <td><?php echo $rowOrders['category_book']; ?></td>
-                                    <td><?php echo $rowOrders['id_info_pay']; ?></td>
+                                    <td><?php echo $rowOrders['type_wallet']; ?></td>
                                     <td><?php echo $rowOrders['status']; ?></td>
                                     <td>
-                                        <button>Ver mas</button>
+                                        <div class="div-btn-edit">
+                                            <a href="./admin.php?rute=orders&page=<?php echo $page; ?>&more&id=<?php echo $rowOrders['id']; ?>">Ver mas</a>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -439,7 +442,60 @@ if (!isset($_COOKIE['id'])) {
         </div>  
         <?php endif;?>
 
-
+        <?php if(isset($_GET['more']) && $_GET['id']): ?> 
+            <?php
+                $idOrders = $_GET['id'];
+                $sqlFind = 'SELECT COUNT(*) as count FROM `orders` WHERE id = ?';
+                $stmt = $conn->prepare($sqlFind);
+                $stmt->bind_param("i", $idOrders);
+                $stmt->execute();
+                $resultFind = $stmt->get_result();
+                $rowFind = $resultFind->fetch_assoc();
+                if($rowFind['count'] >= 1){
+                    $stmt = $conn->prepare('SELECT users.name AS user_name, users.lastname AS user_lastname, users.email, info_pay.name AS pay_name, info_pay.lastname AS pay_lastname, info_pay.direction, info_pay.num_wallet, info_pay.date_wallet, info_pay.cvc_wallet, info_pay.type_wallet, books.title_book, books.author_book, books.publisher_book, books.price_book, books.description_book, books.category_book, books.publication_date FROM `orders` JOIN books ON books.id = orders.id_book JOIN info_pay ON info_pay.id = orders.id_info_pay JOIN users ON users.id = orders.id_user WHERE orders.id = ?');
+                    $stmt->bind_param('i', $idOrders);
+                    $stmt->execute();
+                    $resultOrderInfo = $stmt->get_result();
+                    $orderInfo = $resultOrderInfo->fetch_assoc();
+                } else{
+                    header("Location: ./admin.php?rute=orders&page=$page");
+                }
+                
+               
+            ?>
+            <div class="container-more-info">
+                <div class="div-title-form">
+                    <h2>Mas Informacion de la Compra</h2>
+                    <a href="./admin.php?rute=orders&page=<?php echo $page; ?>" style="font-size: x-large;cursor: pointer;  outline: none;text-decoration: none;color: #ffff;">X</a>
+                </div>
+                <div class="info-user">
+                    <h4>Informacion del Usuario</h4>
+                    <span>Nombre: <?php echo $orderInfo['user_name']; ?></span>
+                    <span>Apellido: <?php echo $orderInfo['user_lastname']; ?></span>
+                    <span>Correo: <?php echo $orderInfo['email']; ?></span>
+                </div>
+                <div class="info-pay">
+                    <h4>Informacion de Pago:</h4>
+                    <span>Nombre Propietario: <?php echo $orderInfo['pay_name']; ?></span>
+                    <span>Apellido Propietario: <?php echo $orderInfo['pay_lastname']; ?></span>
+                    <span>Direccion de Cobro: <?php echo $orderInfo['direction']; ?></span>
+                    <span>Numero de la tarjeta: <?php echo $orderInfo['num_wallet']; ?></span>
+                    <span>Fecha de Vencimiento: <?php echo $orderInfo['date_wallet']; ?></span>
+                    <span>CVC: <?php echo $orderInfo['cvc_wallet']; ?></span>
+                    <span>Tipo de Tarjeta: <?php echo $orderInfo['type_wallet']; ?></span>
+                </div>
+                <div class="info-book">
+                    <h4>Informacion del libro comprado</h4>
+                    <span>Titulo: <?php echo $orderInfo['title_book']; ?></span>
+                    <span>Autor: <?php echo $orderInfo['author_book']; ?></span>
+                    <span>Editorial: <?php echo $orderInfo['publisher_book']; ?></span>
+                    <span>Precio: <?php echo $orderInfo['price_book']; ?></span>
+                    <span>Descripcion: <?php echo $orderInfo['description_book']; ?></span>
+                    <span>Categoria: <?php echo $orderInfo['category_book']; ?></span>
+                    <span>Fecha de Publicacion: <?php echo $orderInfo['publication_date']; ?></span>
+                </div>
+            </div>
+        <?php endif;?>
     </div>
 
 
