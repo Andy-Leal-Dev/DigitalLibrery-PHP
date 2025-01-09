@@ -21,8 +21,16 @@
             if ($id_user) { 
                 $cookieid = $id_user;
                 $cookietype = $tipo;
+                $key = 'WcaIcbbjWowtt9Iz1MwRTqFFhl+X0cDTctO2DONphy3e5x/7oxqHm8CtGuVVU8mbJU7prryOBnywFnpOCB+OIQ';
+                $hashCookie = hash_hmac('sha256', $cookieid, $key);
+                $hashType = hash_hmac('sha256', $cookietype, $key);
+
                 setcookie('id', $cookieid, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
+                setcookie('id_hash', $hashCookie, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
                 setcookie('type', $cookietype, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
+                setcookie('type_hash', $hashType, time() + (60 * 60 * 24 * 365), '/', $_SERVER['HTTP_HOST'], true, true);
+
+              
                 $referred = isset($_COOKIE['id']);
                 if(!$referred){
                     echo "no hay cokie";

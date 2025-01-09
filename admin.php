@@ -3,6 +3,36 @@ if (!isset($_COOKIE['id'])) {
     header("Location: ./index.php");
     exit();
 }
+if (isset($_COOKIE['type']) && $_COOKIE['type'] == 1) {
+    header("Location: ./index.php");
+    exit();
+}
+
+if (isset($_COOKIE['id']) && isset($_COOKIE['id_hash']) && isset($_COOKIE['type']) && isset($_COOKIE['type_hash'])) {
+    $id = $_COOKIE['id'];
+    $hash_id = $_COOKIE['id_hash'];
+    $type = $_COOKIE['type'];
+    $hash_type = $_COOKIE['type_hash'];
+    $key = 'WcaIcbbjWowtt9Iz1MwRTqFFhl+X0cDTctO2DONphy3e5x/7oxqHm8CtGuVVU8mbJU7prryOBnywFnpOCB+OIQ';
+
+    $expectedHashid = hash_hmac('sha256', $id, $key);
+    $expectedHashtype = hash_hmac('sha256', $type, $key);
+
+    if (!hash_equals($expectedHashid, $hash_id) || !hash_equals($expectedHashtype, $hash_type)) {
+        setcookie('id', '', time() - 3600, '/');
+        setcookie('id_hash', '', time() - 3600, '/');
+        setcookie('type', '', time() - 3600, '/');
+        setcookie('type_hash', '', time() - 3600, '/');
+
+        unset($_COOKIE['id']);
+        unset($_COOKIE['id_hash']);
+        unset($_COOKIE['type']);
+        unset($_COOKIE['type_hash']);
+
+        header('Location: /DigitalLibrary/index.php');
+        exit();
+    }
+    }
 ?>
 
 <?php
